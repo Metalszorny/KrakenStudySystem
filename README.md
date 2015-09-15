@@ -17,7 +17,7 @@ Features:
 
 Enviroment:
 -----------
-- IDE: Microsoft Visual Studio 2012 Professional Update 2 with .Net Framework 4.0
+- IDE: Microsoft Visual Studio 2012 Professional Update 2 with .Net Framework 4.5
 - OS: Microsoft Windows 7 Professional Service Pack 1, 64 bit
 
 
