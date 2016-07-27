@@ -9,7 +9,7 @@ A model of the Neptun study system with simplified funcionality.
 
 Used languages:
 ---------------
-- C#
+- Visual C#
 - XML
 
 
