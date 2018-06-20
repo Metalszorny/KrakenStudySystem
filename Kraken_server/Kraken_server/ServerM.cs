@@ -18,19 +18,19 @@ namespace Kraken_server
         #region Fields
 
         // The key for subjects.
-        int targy_kulcs = 0;
+        private int targy_kulcs = 0;
 
         // The key for the students.
-        int hallgato_kulcs = 0;
+        private int hallgato_kulcs = 0;
 
         // The key for the teachers.
-        int oktato_kulcs = 0;
+        private int oktato_kulcs = 0;
 
         // The key for the users.
-        int felhasznalo_kulcs = 0;
+        private int felhasznalo_kulcs = 0;
 
         // The key fot the messages.
-        int uzenet_kulcs = 0;
+        private int uzenet_kulcs = 0;
 
         #endregion Fields
 
@@ -42,8 +42,8 @@ namespace Kraken_server
         /// <param name="reportMessage">The reportMessage.</param>
         public void Report(string reportMessage)
         {
-            Console.WriteLine("[" + DateTime.Now.Year + "." + DateTime.Now.Month + "." + DateTime.Now.Day + " "
-                + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + "] " + reportMessage);
+            Console.WriteLine("[" + DateTime.Now.Year + "." + DateTime.Now.Month + "." + DateTime.Now.Day + " " + 
+				DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + "] " + reportMessage);
         }
 
         /// <summary>
@@ -54,25 +54,24 @@ namespace Kraken_server
         /// <returns>The user.</returns>
         public Felhasznalo Belep(string userName, string pass)
         {
-            // DEBUG tesztgomb
+            // DEBUG tesztgomb.
             if (pass == "teszt" && userName == "teszt")
             {
-
                 Report(userName + " felhasználó sikeresen belépett.");
                 return new Felhasznalo(null, null, null, "teszt", "teszt", null, null, null, null, null, null, null, null, null, null, null, null, null);
             }
 
-            // Felhasználó keresése az XML-ben
+            // Felhasználó keresése az XML-ben.
             XDocument kereses = XDocument.Load("felhasznalok.xml");
             var felhasznalok = kereses.Descendants("felhasznalo");
             var keres = from x in felhasznalok
                         where (string)x.Element("kod") == userName.ToUpper().ToString() && (string)x.Element("jelszo") == pass.ToString()
                         select new { Id = x.Attribute("id").Value };
 
-            // Ha van ilyen
+            // Ha van ilyen.
             if (keres.Count() == 1)
             {
-                // Adatok átadása 
+                // Adatok átadása.
                 var felhasznalo = from x in kereses.Descendants("felhasznalo")
                                   where (string)x.Element("kod") == userName.ToUpper().ToString() && (string)x.Element("jelszo") == pass.ToString()
                                   let neve = (string)x.Element("nev")
@@ -101,7 +100,7 @@ namespace Kraken_server
             }
             else
             {
-                // Hiba a belépésnél
+                // Hiba a belépésnél.
                 Report("Sikertelen bejelentkezés: " + userName);
 
                 return null;
@@ -214,9 +213,7 @@ namespace Kraken_server
                 }
             }
             catch
-            {
-
-            }
+            { }
 
             switch (input.ToString())
             {
@@ -1859,9 +1856,7 @@ namespace Kraken_server
                 keres.Save("uzenetek.xml");
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -1881,9 +1876,7 @@ namespace Kraken_server
                 keres.Save("hallgatok.xml");
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -1903,9 +1896,7 @@ namespace Kraken_server
                 keres.Save("oktatok.xml");
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -1925,9 +1916,7 @@ namespace Kraken_server
                 keres.Save("felhasznalok.xml");
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -1947,9 +1936,7 @@ namespace Kraken_server
                 keres.Save("targyak.xml");
             }
             catch
-            {
-
-            }
+            { }
         }
 
         #endregion Delete
@@ -1988,11 +1975,17 @@ namespace Kraken_server
 
                     mentes.Save("uzenetek.xml");
                 }
+				else
+				{
+					if (((Uzenet)talalat.Single()).Torolve == "true")
+					{
+						talalat.Single().Element("torolt").Value = "false";
+						mentes.Save("uzenetek.xml");
+					}
+				}
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -2034,11 +2027,17 @@ namespace Kraken_server
 
                     mentes.Save("felhasznalok.xml");
                 }
+				else
+				{
+					if (((Felhasznalo)talalat.Single()).Torolve == "true")
+					{
+						talalat.Single().Element("torolt").Value = "false";
+						mentes.Save("felhasznalok.xml");
+					}
+				}
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -2072,11 +2071,17 @@ namespace Kraken_server
 
                     mentes.Save("targyak.xml");
                 }
+				else
+				{
+					if (((Targy)talalat.Single()).Torolve == "true")
+					{
+						talalat.Single().Element("torolt").Value = "false";
+						mentes.Save("targyak.xml");
+					}
+				}
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -2113,11 +2118,17 @@ namespace Kraken_server
 
                     mentes.Save("targyak.xml");
                 }
+				else
+				{
+					if (((Hallgato_index)talalat.Single()).Torolve == "true")
+					{
+						talalat.Single().Element("torolt").Value = "false";
+						mentes.Save("targyak.xml");
+					}
+				}
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -2152,11 +2163,17 @@ namespace Kraken_server
 
                     mentes.Save("targyak.xml");
                 }
+				else
+				{
+					if (((Oktato_index)talalat.Single()).Torolve == "true")
+					{
+						talalat.Single().Element("torolt").Value = "false";
+						mentes.Save("targyak.xml");
+					}
+				}
             }
             catch
-            {
-
-            }
+            { }
         }
 
         #endregion Add
@@ -2217,9 +2234,7 @@ namespace Kraken_server
                 keres.Save("uzenetek.xml");
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -2272,9 +2287,7 @@ namespace Kraken_server
                 keres.Save("targyak.xml");
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -2331,9 +2344,7 @@ namespace Kraken_server
                 keres.Save("targyak.xml");
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -2398,9 +2409,7 @@ namespace Kraken_server
                 keres.Save("targyak.xml");
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -2485,9 +2494,7 @@ namespace Kraken_server
                 keres.Save("felhasznalok.xml");
             }
             catch
-            {
-
-            }
+            { }
         }
 
         #endregion Edit

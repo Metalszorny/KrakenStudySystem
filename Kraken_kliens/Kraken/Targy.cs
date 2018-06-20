@@ -210,6 +210,12 @@ namespace Kraken
             this.idje = idje;
             this.torolve = torolve;
         }
+		
+		/// <summary>
+        /// Destroys the instance of the <see cref="Targy"/> class.
+        /// </summary>
+        ~Targy()
+        { }
 
         #endregion Constructors
 
@@ -270,6 +276,12 @@ namespace Kraken
         {
             this.krakenje = krakenje;
         }
+		
+		/// <summary>
+        /// Destroys the instance of the <see cref="Oktato_index"/> class.
+        /// </summary>
+        ~Oktato_index()
+        { }
 
         #endregion Constructors
 
@@ -366,6 +378,12 @@ namespace Kraken
             this.alairasa = alairasa;
             this.jegye = jegye;
         }
+		
+		/// <summary>
+        /// Destroys the instance of the <see cref="Hallgato_index"/> class.
+        /// </summary>
+        ~Hallgato_index()
+        { }
 
         #endregion Constructors
 

@@ -20,14 +20,12 @@ namespace Kraken
         #region Fields
 
         internal Felhasznalo belepo;
-        bool kodtext_change = false;
-        bool jelszotext_change = false;
+        private bool kodtext_change = false;
+        private bool jelszotext_change = false;
 
-        // szerverhez csatlakozáshoz szükséges Objektumok
-        static NetTcpBinding bind = new NetTcpBinding();
-        static EndpointAddress addr = new EndpointAddress(new Uri("net.tcp://localhost/KrakenService"));
-        ChannelFactory<IServerM> chanel = new ChannelFactory<IServerM>(bind, addr);
-        IServerM server = null;
+        // szerverhez csatlakozáshoz szükséges Objektumok.
+        private ChannelFactory<IServerM> chanel = new ChannelFactory<IServerM>(new NetTcpBinding(), new EndpointAddress(new Uri("net.tcp://localhost/KrakenService")));
+        private IServerM server = null;
 
         #endregion Fields
 
@@ -40,6 +38,12 @@ namespace Kraken
         {
             InitializeComponent();
         }
+		
+		/// <summary>
+        /// Destroys the instance of the <see cref="Form2"/> class.
+        /// </summary>
+        ~Form2()
+        { }
 
         #endregion Constructors
 

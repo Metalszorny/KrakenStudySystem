@@ -355,6 +355,12 @@ namespace Kraken
             this.telefonja = telefonja;
             this.torolve = torolve;
         }
+		
+		/// <summary>
+        /// Destroys the instance of the <see cref="Felhasznalo"/> class.
+        /// </summary>
+        ~Felhasznalo()
+        { }
 
         #endregion Constructors
 

@@ -1,5 +1,4 @@
-# KrakenStudySystem
-===================
+# KrakenStudySystemInVisualCSharp
 
 
 About:
@@ -18,7 +17,7 @@ Features:
 - Server: Console
 - Client: Windows Forms
 - WCF for server-client Connection
-- .Net XML
+- XML handling for database
 
 
 Enviroment:
@@ -30,3 +29,4 @@ Enviroment:
 Warning:
 --------
 - Hungarian language is used in the application.
+- Development and testing has not been finished.

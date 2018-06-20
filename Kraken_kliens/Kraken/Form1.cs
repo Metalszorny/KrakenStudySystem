@@ -24,7 +24,7 @@ namespace Kraken
 
         internal Felhasznalo belepo;
 
-        string[] felevek = new string[12]
+        private string[] felevek = new string[12]
         {
             "2008/09/1",
             "2008/09/2",
@@ -40,38 +40,36 @@ namespace Kraken
             "2013/14/2"
         };
 
-        string box = "";
-        string aktualis_felev = "2013/14/2";
+        private string box = "";
+        private string aktualis_felev = "2013/14/2";
 
-        // Kulcsok
-        int targy_kulcs = 0;
-        int hallgato_kulcs = 0;
-        int oktato_kulcs = 0;
-        int felhasznalo_kulcs = 0;
-        int uzenet_kulcs = 0;
+        // Kulcsok.
+        private int targy_kulcs = 0;
+        private int hallgato_kulcs = 0;
+        private int oktato_kulcs = 0;
+        private int felhasznalo_kulcs = 0;
+        private int uzenet_kulcs = 0;
 
-        // Tárgyfelvétel
-        string h_targyfelv_id; // kód
-        string h_targyfelv_elokov; // előkövetelmény
+        // Tárgyfelvétel.
+        private string h_targyfelv_id; // kód.
+        private string h_targyfelv_elokov; // előkövetelmény.
 
-        // Üzenet
-        string uzenet_id1; // idő
-        string uzenet_id2; // küldő/címzett
-        string uzenet_id3; // tárgy
-        string uzenet_id4; // szöveg
-        bool cim_valtozas = false; // cím
-        bool targy_valtozas = false; // tárgy
-        bool szoveg_valtozas = false; // szöveg
+        // Üzenet.
+        private string uzenet_id1; // idő.
+        private string uzenet_id2; // küldő/címzett.
+        private string uzenet_id3; // tárgy.
+        private string uzenet_id4; // szöveg.
+        private bool cim_valtozas = false; // cím.
+        private bool targy_valtozas = false; // tárgy.
+        private bool szoveg_valtozas = false; // szöveg.
 
-        // Értékelés
-        bool alairas_change = false; // aláírás
-        bool jegy_change = false; // jegy
+        // Értékelés.
+        private bool alairas_change = false; // aláírás.
+        private bool jegy_change = false; // jegy.
 
-        // szerverhez csatlakozáshoz szükséges Objektumok
-        static NetTcpBinding bind = new NetTcpBinding();
-        static EndpointAddress addr = new EndpointAddress(new Uri("net.tcp://localhost/KrakenService"));
-        ChannelFactory<IServerM> chanel = new ChannelFactory<IServerM>(bind, addr);
-        IServerM server = null;
+        // szerverhez csatlakozáshoz szükséges Objektumok.
+        private ChannelFactory<IServerM> chanel = new ChannelFactory<IServerM>(new NetTcpBinding(), new EndpointAddress(new Uri("net.tcp://localhost/KrakenService")));
+        private IServerM server = null;
 
         #endregion Fields
 
@@ -84,6 +82,12 @@ namespace Kraken
         {
             InitializeComponent();
         }
+		
+		/// <summary>
+        /// Destroys the instance of the <see cref="Form1"/> class.
+        /// </summary>
+        ~Form1()
+        { }
 
         #endregion Constructors
 
@@ -127,26 +131,26 @@ namespace Kraken
         /// </summary>
         private void BejelentkezesEsKijelentkezes()
         {
-            if (label1.Text == "Bejelentkezés") // Bejelentkezés
+			// Bejelentkezés.
+            if (label1.Text == "Bejelentkezés")
             {
-                // Bejelentkező felület meghívása
+                // Bejelentkező felület meghívása.
                 Form2 bejelentkezes = new Form2();
                 bejelentkezes.ShowDialog();
 
-                // A felhasználó adatainak lekérése
+                // A felhasználó adatainak lekérése.
                 try
                 {
                     this.belepo = bejelentkezes.belepo;
                 }
                 catch
-                {
+                { }
 
-                }
-
-                // Frissítés
+                // Frissítés.
                 Form_Frissites();
             }
-            else // Kijelentkezés
+			// Kijelentkezés.
+            else
             {
                 label1.Text = "Bejelentkezés";
                 label48.Text = "";
@@ -160,9 +164,7 @@ namespace Kraken
                     tabControl1.TabPages.Remove(tabPage4);
                 }
                 catch
-                {
-
-                }
+                { }
             }
         }
 
@@ -171,15 +173,13 @@ namespace Kraken
         /// </summary>
         private void Form_Elokeszites()
         {
-            // Kivétel érték beállítása
+            // Kivétel érték beállítása.
             try
             {
                 belepo.Neve = "senki";
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -187,17 +187,18 @@ namespace Kraken
         /// </summary>
         private void Form_Tabok()
         {
-            // Felesleges fülek kiszedése
+            // Felesleges fülek kiszedése.
             try
             {
-                tabControl1.TabPages.Remove(tabPage2); // Hallgatói felület
-                tabControl1.TabPages.Remove(tabPage3); // Oktatói felület
-                tabControl1.TabPages.Remove(tabPage4); // Admin felület
+				// Hallgatói felület.
+                tabControl1.TabPages.Remove(tabPage2);
+				// Oktatói felület.
+                tabControl1.TabPages.Remove(tabPage3);
+				// Admin felület.
+                tabControl1.TabPages.Remove(tabPage4);
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -205,7 +206,7 @@ namespace Kraken
         /// </summary>
         private void Form_Frissites()
         {
-            // Értékek beállítása
+            // Értékek beállítása.
             comboBox1.Items.Clear();
             comboBox2.Items.Clear();
             comboBox3.Items.Clear();
@@ -264,9 +265,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
 
             comboBox10.Items.Add("nő");
             comboBox10.Items.Add("férfi");
@@ -301,16 +300,16 @@ namespace Kraken
             comboBox22.Items.Add("4");
             comboBox22.Items.Add("5");
 
-            // Ellenőrzöm, hogy van-e felhasználó bejelentkezve
+            // Ellenőrzöm, hogy van-e felhasználó bejelentkezve.
             try
             {
                 if (belepo.Neve != "senki")
                 {
-                    // label-ek beállítása
+                    // label-ek beállítása.
                     label1.Text = "Kilépés";
                     label48.Text = belepo.Kodja.ToString();
 
-                    // Megfelelő fül betöltése
+                    // Megfelelő fül betöltése.
                     tabControl1.TabPages.Remove(tabPage1);
 
                     switch (belepo.Beosztasa.ToString())
@@ -328,27 +327,26 @@ namespace Kraken
                 }
             }
             catch
-            {
+            { }
 
-            }
-
-            // XML kulcsok betöltése
+            // XML kulcsok betöltése.
             if (label1.Text == "Kilépés")
             {
                 try
                 {
                     string megy = "";
 
-                    // A tárgyak xml kulcsának beállítása
+                    // A tárgyak xml kulcsának beállítása.
                     megy = "tárgyak";
                     targy_kulcs = server.Kulcs_Betoltes(megy);
 
-                    // Az üzenetek xml kulcsának beállítása
+                    // Az üzenetek xml kulcsának beállítása.
                     megy = "üzenetek";
                     uzenet_kulcs = server.Kulcs_Betoltes(megy);
 
-                    // A bejelentkezett felhasználó xml kulcsának beállítása
-                    if (belepo.Beosztasa.ToString() == "admin") // admin
+                    // A bejelentkezett felhasználó xml kulcsának beállítása.
+					// admin.
+                    if (belepo.Beosztasa.ToString() == "admin")
                     {
                         megy = "hallgatók";
                         hallgato_kulcs = server.Kulcs_Betoltes(megy);
@@ -359,12 +357,14 @@ namespace Kraken
                     }
                     else
                     {
-                        if (belepo.Beosztasa.ToString() == "hallgato") // hallgató
+						// hallgató.
+                        if (belepo.Beosztasa.ToString() == "hallgato")
                         {
                             megy = "hallgatók";
                             hallgato_kulcs = server.Kulcs_Betoltes(megy);
                         }
-                        else // oktató
+						// oktató.
+                        else
                         {
                             megy = "oktatók";
                             oktato_kulcs = server.Kulcs_Betoltes(megy);
@@ -372,9 +372,7 @@ namespace Kraken
                     }
                 }
                 catch
-                {
-
-                }
+                { }
             }
         }
 
@@ -450,7 +448,7 @@ namespace Kraken
 
                 belepo.Jelszava = ujjelszo.ToString();
 
-                // Frissítés
+                // Frissítés.
                 switch (belepo.Beosztasa.ToString())
                 {
                     case "hallgato":
@@ -465,9 +463,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         #region Uzenetek
@@ -479,12 +475,12 @@ namespace Kraken
         {
             try
             {
-                // Az olvasatlan üzenetek számának megszerzése
+                // Az olvasatlan üzenetek számának megszerzése.
                 string megy = "uzenetek_bejovo_olvasatlan";
                 string kod = belepo.Kodja.ToString();
                 Uzenet[] eredmeny = server.Uzenet_Lista(megy, "", kod, "", "", "");
 
-                // Az olvasatlan üzenetek számának kiírása
+                // Az olvasatlan üzenetek számának kiírása.
                 switch (belepo.Beosztasa.ToString())
                 {
                     case "hallgato":
@@ -526,9 +522,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -541,14 +535,14 @@ namespace Kraken
                 case "hallgato":
                     richTextBox1.Text = "";
 
-                    // Kijelölés esetén engedélyezzük a gombot
+                    // Kijelölés esetén engedélyezzük a gombot.
                     if (dataGridView3.CurrentCellAddress.X >= 0)
                     {
                         try
                         {
                             button9.Enabled = true;
 
-                            // Üzenetazonosítók megszerzése
+                            // Üzenetazonosítók megszerzése.
                             int kijeloltsorindex = dataGridView3.SelectedCells[0].RowIndex;
                             DataGridViewRow kijeloltsor = dataGridView3.Rows[kijeloltsorindex];
                             uzenet_id1 = kijeloltsor.Cells["kuldesido"].Value.ToString();
@@ -562,13 +556,13 @@ namespace Kraken
                             kijeloltsor = dataGridView3.Rows[kijeloltsorindex];
                             uzenet_id4 = kijeloltsor.Cells["be_szoveg"].Value.ToString();
 
-                            // Üzenet Olvasása
+                            // Üzenet Olvasása.
                             string kod = belepo.Kodja.ToString();
                             string megy = "uzenetek_beerkezett_kijeloles";
                             Uzenet[] eredmeny = server.Uzenet_Lista(megy, uzenet_id2, kod, uzenet_id3, uzenet_id4, uzenet_id1);
                             richTextBox1.Text = eredmeny[0].Szovege.ToString();
 
-                            // Megnyitás esetén olvasott státusz változtatása
+                            // Megnyitás esetén olvasott státusz változtatása.
                             if (eredmeny[0].Olvasva_e.ToString() == "false")
                             {
                                 Uzenet mit = new Uzenet(eredmeny[0].Ideje.ToString(), eredmeny[0].Torolve.ToString(), eredmeny[0].Kuldoje.ToString(), eredmeny[0].Cimzettje.ToString(), eredmeny[0].Targya.ToString(), eredmeny[0].Szovege.ToString(), eredmeny[0].Megvan_kuldonek.ToString(), eredmeny[0].Megvan_cimzettnek.ToString(), eredmeny[0].Mentve_e.ToString(), eredmeny[0].Olvasva_e.ToString(), eredmeny[0].Idje.ToString());
@@ -578,9 +572,7 @@ namespace Kraken
                             }
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                     else
                     {
@@ -590,14 +582,14 @@ namespace Kraken
                 case "oktato":
                     richTextBox5.Text = "";
 
-                    // Kijelölés esetén engedélyezzük a gombot
+                    // Kijelölés esetén engedélyezzük a gombot.
                     if (dataGridView6.CurrentCellAddress.X >= 0)
                     {
                         try
                         {
                             button11.Enabled = true;
 
-                            // Üzenetazonosítók megszerzése
+                            // Üzenetazonosítók megszerzése.
                             int kijeloltsorindex = dataGridView6.SelectedCells[0].RowIndex;
                             DataGridViewRow kijeloltsor = dataGridView6.Rows[kijeloltsorindex];
                             uzenet_id1 = kijeloltsor.Cells["dataGridViewTextBoxColumn6"].Value.ToString();
@@ -611,13 +603,13 @@ namespace Kraken
                             kijeloltsor = dataGridView6.Rows[kijeloltsorindex];
                             uzenet_id4 = kijeloltsor.Cells["Column46"].Value.ToString();
 
-                            // Üzenet Olvasása
+                            // Üzenet Olvasása.
                             string kod = belepo.Kodja.ToString();
                             string megy = "uzenetek_beerkezett_kijeloles";
                             Uzenet[] eredmeny = server.Uzenet_Lista(megy, uzenet_id2, kod, uzenet_id3, uzenet_id4, uzenet_id1);
                             richTextBox5.Text = eredmeny[0].Szovege.ToString();
 
-                            // Megnyitás esetén olvasott státusz változtatása
+                            // Megnyitás esetén olvasott státusz változtatása.
                             if (eredmeny[0].Olvasva_e.ToString() == "false")
                             {
                                 Uzenet mit = new Uzenet(eredmeny[0].Ideje.ToString(), eredmeny[0].Torolve.ToString(), eredmeny[0].Kuldoje.ToString(), eredmeny[0].Cimzettje.ToString(), eredmeny[0].Targya.ToString(), eredmeny[0].Szovege.ToString(), eredmeny[0].Megvan_kuldonek.ToString(), eredmeny[0].Megvan_cimzettnek.ToString(), eredmeny[0].Mentve_e.ToString(), eredmeny[0].Olvasva_e.ToString(), eredmeny[0].Idje.ToString());
@@ -627,9 +619,7 @@ namespace Kraken
                             }
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                     else
                     {
@@ -639,14 +629,14 @@ namespace Kraken
                 case "admin":
                     richTextBox9.Text = "";
 
-                    // Kijelölés esetén engedélyezzük a gombot
+                    // Kijelölés esetén engedélyezzük a gombot.
                     if (dataGridView12.CurrentCellAddress.X >= 0)
                     {
                         try
                         {
                             button22.Enabled = true;
 
-                            // Üzenetazonosítók megszerzése
+                            // Üzenetazonosítók megszerzése.
                             int kijeloltsorindex = dataGridView6.SelectedCells[0].RowIndex;
                             DataGridViewRow kijeloltsor = dataGridView6.Rows[kijeloltsorindex];
                             uzenet_id1 = kijeloltsor.Cells["dataGridViewTextBoxColumn14"].Value.ToString();
@@ -660,13 +650,13 @@ namespace Kraken
                             kijeloltsor = dataGridView6.Rows[kijeloltsorindex];
                             uzenet_id4 = kijeloltsor.Cells["Column47"].Value.ToString();
 
-                            // Üzenet Olvasása
+                            // Üzenet Olvasása.
                             string kod = belepo.Kodja.ToString();
                             string megy = "uzenetek_beerkezett_kijeloles";
                             Uzenet[] eredmeny = server.Uzenet_Lista(megy, uzenet_id2, kod, uzenet_id3, uzenet_id4, uzenet_id1);
                             richTextBox9.Text = eredmeny[0].Szovege.ToString();
 
-                            // Megnyitás esetén olvasott státusz változtatása
+                            // Megnyitás esetén olvasott státusz változtatása.
                             if (eredmeny[0].Olvasva_e.ToString() == "false")
                             {
                                 Uzenet mit = new Uzenet(eredmeny[0].Ideje.ToString(), eredmeny[0].Torolve.ToString(), eredmeny[0].Kuldoje.ToString(), eredmeny[0].Cimzettje.ToString(), eredmeny[0].Targya.ToString(), eredmeny[0].Szovege.ToString(), eredmeny[0].Megvan_kuldonek.ToString(), eredmeny[0].Megvan_cimzettnek.ToString(), eredmeny[0].Mentve_e.ToString(), eredmeny[0].Olvasva_e.ToString(), eredmeny[0].Idje.ToString());
@@ -676,9 +666,7 @@ namespace Kraken
                             }
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                     else
                     {
@@ -707,11 +695,9 @@ namespace Kraken
                 }
             }
             catch
-            {
+            { }
 
-            }
-
-            // Frissítés
+            // Frissítés.
             switch (belepo.Beosztasa.ToString())
             {
                 case "hallgato":
@@ -736,14 +722,14 @@ namespace Kraken
                 case "hallgato":
                     richTextBox2.Text = "";
 
-                    // Kijelölés esetén engedélyezzük a gombot
+                    // Kijelölés esetén engedélyezzük a gombot.
                     if (dataGridView4.CurrentCellAddress.X >= 0)
                     {
                         try
                         {
                             button10.Enabled = true;
 
-                            // Üzenetazonosítók megszerzése
+                            // Üzenetazonosítók megszerzése.
                             int kijeloltsorindex = dataGridView4.SelectedCells[0].RowIndex;
                             DataGridViewRow kijeloltsor = dataGridView4.Rows[kijeloltsorindex];
                             uzenet_id1 = kijeloltsor.Cells["kuldesideje"].Value.ToString();
@@ -757,16 +743,14 @@ namespace Kraken
                             kijeloltsor = dataGridView4.Rows[kijeloltsorindex];
                             uzenet_id4 = kijeloltsor.Cells["ki_szoveg"].Value.ToString();
 
-                            // Üzenet Olvasása
+                            // Üzenet Olvasása.
                             string megy = "uzenetek_elkuldott_kijeloles";
                             string kod = belepo.Kodja.ToString();
                             Uzenet[] eredmeny = server.Uzenet_Lista(megy, kod, uzenet_id2, uzenet_id3, uzenet_id4, uzenet_id1);
                             richTextBox2.Text = eredmeny[0].Szovege.ToString();
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                     else
                     {
@@ -776,14 +760,14 @@ namespace Kraken
                 case "oktato":
                     richTextBox6.Text = "";
 
-                    // Kijelölés esetén engedélyezzük a gombot
+                    // Kijelölés esetén engedélyezzük a gombot.
                     if (dataGridView10.CurrentCellAddress.X >= 0)
                     {
                         try
                         {
                             button15.Enabled = true;
 
-                            // Üzenetazonosítók megszerzése
+                            // Üzenetazonosítók megszerzése.
                             int kijeloltsorindex = dataGridView10.SelectedCells[0].RowIndex;
                             DataGridViewRow kijeloltsor = dataGridView10.Rows[kijeloltsorindex];
                             uzenet_id1 = kijeloltsor.Cells["kuldesideje"].Value.ToString();
@@ -797,16 +781,14 @@ namespace Kraken
                             kijeloltsor = dataGridView10.Rows[kijeloltsorindex];
                             uzenet_id4 = kijeloltsor.Cells["ki_szoveg"].Value.ToString();
 
-                            // Üzenet Olvasása
+                            // Üzenet Olvasása.
                             string megy = "uzenetek_elkuldott_kijeloles";
                             string kod = belepo.Kodja.ToString();
                             Uzenet[] eredmeny = server.Uzenet_Lista(megy, kod, uzenet_id2, uzenet_id3, uzenet_id4, uzenet_id1);
                             richTextBox6.Text = eredmeny[0].Szovege.ToString();
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                     else
                     {
@@ -816,14 +798,14 @@ namespace Kraken
                 case "admin":
                     richTextBox10.Text = "";
 
-                    // Kijelölés esetén engedélyezzük a gombot
+                    // Kijelölés esetén engedélyezzük a gombot.
                     if (dataGridView13.CurrentCellAddress.X >= 0)
                     {
                         try
                         {
                             button23.Enabled = true;
 
-                            // Üzenetazonosítók megszerzése
+                            // Üzenetazonosítók megszerzése.
                             int kijeloltsorindex = dataGridView13.SelectedCells[0].RowIndex;
                             DataGridViewRow kijeloltsor = dataGridView13.Rows[kijeloltsorindex];
                             uzenet_id1 = kijeloltsor.Cells["kuldesideje"].Value.ToString();
@@ -837,16 +819,14 @@ namespace Kraken
                             kijeloltsor = dataGridView13.Rows[kijeloltsorindex];
                             uzenet_id4 = kijeloltsor.Cells["ki_szoveg"].Value.ToString();
 
-                            // Üzenet Olvasása
+                            // Üzenet Olvasása.
                             string megy = "uzenetek_elkuldott_kijeloles";
                             string kod = belepo.Kodja.ToString();
                             Uzenet[] eredmeny = server.Uzenet_Lista(megy, kod, uzenet_id2, uzenet_id3, uzenet_id4, uzenet_id1);
                             richTextBox10.Text = eredmeny[0].Szovege.ToString();
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                     else
                     {
@@ -876,11 +856,9 @@ namespace Kraken
                 }
             }
             catch
-            {
+            { }
 
-            }
-
-            // Frissítés
+            // Frissítés.
             switch (belepo.Beosztasa.ToString())
             {
                 case "hallgato":
@@ -905,14 +883,14 @@ namespace Kraken
                 case "hallgato":
                     richTextBox4.Text = "";
 
-                    // Kijelölés esetén engedélyezzük a gombot
+                    // Kijelölés esetén engedélyezzük a gombot.
                     if (dataGridView5.CurrentCellAddress.X >= 0)
                     {
                         try
                         {
                             button8.Enabled = true;
 
-                            // Üzenetazonosítók megszerzése
+                            // Üzenetazonosítók megszerzése.
                             int kijeloltsorindex = dataGridView5.SelectedCells[0].RowIndex;
                             DataGridViewRow kijeloltsor = dataGridView5.Rows[kijeloltsorindex];
                             uzenet_id1 = kijeloltsor.Cells["ido"].Value.ToString();
@@ -934,7 +912,7 @@ namespace Kraken
                             textBox8.Text = eredmeny[0].Targya.ToString();
                             richTextBox4.Text = eredmeny[0].Szovege.ToString();
 
-                            // Gombok láthatóságának beállítása
+                            // Gombok láthatóságának beállítása.
                             if (textBox9.Text != "")
                             {
                                 button6.Enabled = true;
@@ -953,9 +931,7 @@ namespace Kraken
                             }
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                     else
                     {
@@ -967,14 +943,14 @@ namespace Kraken
                 case "oktato":
                     richTextBox7.Text = "";
 
-                    // Kijelölés esetén engedélyezzük a gombot
+                    // Kijelölés esetén engedélyezzük a gombot.
                     if (dataGridView11.CurrentCellAddress.X >= 0)
                     {
                         try
                         {
                             button16.Enabled = true;
 
-                            // Üzenetazonosítók megszerzése
+                            // Üzenetazonosítók megszerzése.
                             int kijeloltsorindex = dataGridView11.SelectedCells[0].RowIndex;
                             DataGridViewRow kijeloltsor = dataGridView11.Rows[kijeloltsorindex];
                             uzenet_id1 = kijeloltsor.Cells["dataGridViewTextBoxColumn11"].Value.ToString();
@@ -988,7 +964,7 @@ namespace Kraken
                             kijeloltsor = dataGridView11.Rows[kijeloltsorindex];
                             uzenet_id4 = kijeloltsor.Cells["Column50"].Value.ToString();
 
-                            // Üzenet Olvasása
+                            // Üzenet Olvasása.
                             string megy = "uzenetek_piszkozat_kijeloles";
                             string kod = belepo.Kodja.ToString();
                             Uzenet[] eredmeny = server.Uzenet_Lista(megy, kod, uzenet_id2, uzenet_id3, uzenet_id4, uzenet_id1);
@@ -996,7 +972,7 @@ namespace Kraken
                             textBox10.Text = eredmeny[0].Targya.ToString();
                             richTextBox7.Text = eredmeny[0].Szovege.ToString();
 
-                            // Gombok láthatóságának beállítása
+                            // Gombok láthatóságának beállítása.
                             if (textBox11.Text != "")
                             {
                                 button18.Enabled = true;
@@ -1015,9 +991,7 @@ namespace Kraken
                             }
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                     else
                     {
@@ -1029,14 +1003,14 @@ namespace Kraken
                 case "admin":
                     richTextBox11.Text = "";
 
-                    // Kijelölés esetén engedélyezzük a gombot
+                    // Kijelölés esetén engedélyezzük a gombot.
                     if (dataGridView14.CurrentCellAddress.X >= 0)
                     {
                         try
                         {
                             button26.Enabled = true;
 
-                            // Üzenetazonosítók megszerzése
+                            // Üzenetazonosítók megszerzése.
                             int kijeloltsorindex = dataGridView14.SelectedCells[0].RowIndex;
                             DataGridViewRow kijeloltsor = dataGridView14.Rows[kijeloltsorindex];
                             uzenet_id1 = kijeloltsor.Cells["dataGridViewTextBoxColumn11"].Value.ToString();
@@ -1050,7 +1024,7 @@ namespace Kraken
                             kijeloltsor = dataGridView14.Rows[kijeloltsorindex];
                             uzenet_id4 = kijeloltsor.Cells["Column50"].Value.ToString();
 
-                            // Üzenet Olvasása
+                            // Üzenet Olvasása.
                             string megy = "uzenetek_piszkozat_kijeloles";
                             string kod = belepo.Kodja.ToString();
                             Uzenet[] eredmeny = server.Uzenet_Lista(megy, kod, uzenet_id2, uzenet_id3, uzenet_id4, uzenet_id1);
@@ -1058,7 +1032,7 @@ namespace Kraken
                             textBox86.Text = eredmeny[0].Targya.ToString();
                             richTextBox11.Text = eredmeny[0].Szovege.ToString();
 
-                            // Gombok láthatóságának beállítása
+                            // Gombok láthatóságának beállítása.
                             if (textBox87.Text != "")
                             {
                                 button24.Enabled = true;
@@ -1077,9 +1051,7 @@ namespace Kraken
                             }
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                     else
                     {
@@ -1090,7 +1062,6 @@ namespace Kraken
                     break;
             }
         }
-
 
         /// <summary>
         /// Draft message assignnee text change.
@@ -1260,11 +1231,9 @@ namespace Kraken
                 szoveg_valtozas = false;
             }
             catch
-            {
+            { }
 
-            }
-
-            // Frissítés
+            // Frissítés.
             switch (belepo.Beosztasa.ToString())
             {
                 case "hallgato":
@@ -1327,11 +1296,9 @@ namespace Kraken
                 szoveg_valtozas = false;
             }
             catch
-            {
+            { }
 
-            }
-
-            // Frissítés
+            // Frissítés.
             switch (belepo.Beosztasa.ToString())
             {
                 case "hallgato":
@@ -1368,11 +1335,9 @@ namespace Kraken
                 szoveg_valtozas = false;
             }
             catch
-            {
+            { }
 
-            }
-
-            // Frissítés
+            // Frissítés.
             switch (belepo.Beosztasa.ToString())
             {
                 case "hallgato":
@@ -1426,7 +1391,7 @@ namespace Kraken
                     break;
             }
 
-            // Gombok láthatóságának beállítása
+            // Gombok láthatóságának beállítása.
             Uzenetek_Uj_Gomb_Ellenorzes();
         }
 
@@ -1469,7 +1434,7 @@ namespace Kraken
                     break;
             }
 
-            // Gombok láthatóságának beállítása
+            // Gombok láthatóságának beállítása.
             Uzenetek_Uj_Gomb_Ellenorzes();
         }
 
@@ -1512,7 +1477,7 @@ namespace Kraken
                     break;
             }
 
-            // Gombok láthatóságának beállítása
+            // Gombok láthatóságának beállítása.
             Uzenetek_Uj_Gomb_Ellenorzes();
         }
 
@@ -1524,7 +1489,7 @@ namespace Kraken
             switch (belepo.Beosztasa.ToString())
             {
                 case "hallgato":
-                    // Küldés gomb
+                    // Küldés gomb.
                     if (textBox2.Text.ToString() != "")
                     {
                         if (button3.Enabled == false)
@@ -1540,7 +1505,7 @@ namespace Kraken
                         }
                     }
 
-                    // Mentés és Elvetés gomb
+                    // Mentés és Elvetés gomb.
                     if ((textBox2.Text.ToString() != "") || (textBox3.Text.ToString() != "") || (richTextBox3.Text.ToString() != ""))
                     {
                         if (button4.Enabled == false)
@@ -1566,7 +1531,7 @@ namespace Kraken
                     }
                     break;
                 case "oktato":
-                    // Küldés gomb
+                    // Küldés gomb.
                     if (textBox5.Text.ToString() != "")
                     {
                         if (button21.Enabled == false)
@@ -1582,7 +1547,7 @@ namespace Kraken
                         }
                     }
 
-                    // Mentés és Elvetés gomb
+                    // Mentés és Elvetés gomb.
                     if ((textBox5.Text.ToString() != "") || (textBox4.Text.ToString() != "") || (richTextBox4.Text.ToString() != ""))
                     {
                         if (button20.Enabled == false)
@@ -1608,7 +1573,7 @@ namespace Kraken
                     }
                     break;
                 case "admin":
-                    // Küldés gomb
+                    // Küldés gomb.
                     if (textBox7.Text.ToString() != "")
                     {
                         if (button29.Enabled == false)
@@ -1624,7 +1589,7 @@ namespace Kraken
                         }
                     }
 
-                    // Mentés és Elvetés gomb
+                    // Mentés és Elvetés gomb.
                     if ((textBox7.Text.ToString() != "") || (textBox6.Text.ToString() != "") || (richTextBox6.Text.ToString() != ""))
                     {
                         if (button28.Enabled == false)
@@ -1690,11 +1655,9 @@ namespace Kraken
                 server.Uzenet_Hozzaad(mit);
             }
             catch
-            {
+            { }
 
-            }
-
-            // Frissítés
+            // Frissítés.
             switch (belepo.Beosztasa.ToString())
             {
                 case "hallgato":
@@ -1747,11 +1710,9 @@ namespace Kraken
                 server.Uzenet_Hozzaad(mit);
             }
             catch
-            {
+            { }
 
-            }
-
-            // Frissítés
+            // Frissítés.
             switch (belepo.Beosztasa.ToString())
             {
                 case "hallgato":
@@ -1790,7 +1751,6 @@ namespace Kraken
                         try
                         {
                             string megy = "oktato_ertekeles_targy_lista";
-
                             string felev = comboBox6.Text.ToString();
                             string kod = belepo.Kodja.ToString();
                             Oktato_index[] eredmeny = server.Oktato_Index_Lista(megy, felev, kod);
@@ -1801,9 +1761,7 @@ namespace Kraken
                             }
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                     break;
                 case "admin":
@@ -1819,8 +1777,7 @@ namespace Kraken
                         try
                         {
                             string megy = "admin_ertekeles_targy_lista";
-
-                            // félév átalakítása
+                            // félév átalakítása.
                             string felev = comboBox7.Text.ToString();
                             int j = felev.Length;
 
@@ -1844,9 +1801,7 @@ namespace Kraken
                             }
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                     break;
             }
@@ -1870,9 +1825,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -1940,7 +1893,6 @@ namespace Kraken
                         try
                         {
                             string megy = "oktato_ertekeles_hallgato_lista";
-
                             string felev = comboBox6.Text.ToString();
                             string kod = listBox1.SelectedItem.ToString();
                             Hallgato_index[] eredmeny = server.Hallgato_Index_Lista(megy, felev, kod);
@@ -1951,9 +1903,7 @@ namespace Kraken
                             }
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                     break;
                 case "admin":
@@ -1968,7 +1918,6 @@ namespace Kraken
                         try
                         {
                             string megy = "admin_ertekeles_hallgato_lista";
-
                             string felev = comboBox7.Text.ToString();
                             string kod = listBox4.SelectedItem.ToString();
                             Hallgato_index[] eredmeny = server.Hallgato_Index_Lista(megy, felev, kod);
@@ -1979,9 +1928,7 @@ namespace Kraken
                             }
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                     break;
             }
@@ -2005,7 +1952,6 @@ namespace Kraken
                         try
                         {
                             string megy = "oktatko_ertekeles_hallgato_targy_lista";
-
                             string felev = comboBox6.Text.ToString();
                             string kod = listBox2.SelectedItem.ToString() + "*" + listBox1.SelectedItem.ToString();
                             Hallgato_index[] eredmeny = server.Hallgato_Index_Lista(megy, felev, kod);
@@ -2025,7 +1971,7 @@ namespace Kraken
                                         comboBox17.Text = "";
                                     }
                                 }
-                                else // vizsgás
+                                else // vizsgás.
                                 {
                                     if (eredmeny[i].Alairasa.ToString() != "")
                                     {
@@ -2058,9 +2004,7 @@ namespace Kraken
                             }
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                     break;
                 case "admin":
@@ -2074,7 +2018,6 @@ namespace Kraken
                         try
                         {
                             string megy = "admin_ertekeles_hallgato_targy_lista";
-
                             string felev = comboBox7.Text.ToString();
                             string kod = listBox3.SelectedItem.ToString() + "*" + listBox4.SelectedItem.ToString();
                             Hallgato_index[] eredmeny = server.Hallgato_Index_Lista(megy, felev, kod);
@@ -2094,7 +2037,7 @@ namespace Kraken
                                         comboBox22.Text = "";
                                     }
                                 }
-                                else // vizsgás
+                                else // vizsgás.
                                 {
                                     if (eredmeny[i].Alairasa.ToString() != "")
                                     {
@@ -2127,9 +2070,7 @@ namespace Kraken
                             }
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                     break;
             }
@@ -2140,7 +2081,7 @@ namespace Kraken
         /// </summary>
         private void Ertekeles_Alairas()
         {
-            // Módosítás
+            // Módosítás.
             try
             {
                 string megy = "ertekeles_alairas";
@@ -2181,11 +2122,9 @@ namespace Kraken
                 }
             }
             catch
-            {
+            { }
 
-            }
-
-            // Üzenet
+            // Üzenet.
             try
             {
                 DateTime idoo = DateTime.Now;
@@ -2199,9 +2138,7 @@ namespace Kraken
                 alairas_change = false;
             }
             catch
-            {
-
-            }
+            { }
 
             if (belepo.Beosztasa.ToString() == "oktato")
             {
@@ -2218,7 +2155,7 @@ namespace Kraken
         /// </summary>
         private void Ertekeles_Jegy()
         {
-            // Módosítás
+            // Módosítás.
             try
             {
                 string megy = "ertekeles_jegy";
@@ -2259,11 +2196,9 @@ namespace Kraken
                 }
             }
             catch
-            {
+            { }
 
-            }
-
-            // Üzenet
+            // Üzenet.
             try
             {
                 DateTime idoo = DateTime.Now;
@@ -2277,9 +2212,7 @@ namespace Kraken
                 jegy_change = false;
             }
             catch
-            {
-
-            }
+            { }
 
             if (belepo.Beosztasa.ToString() == "oktato")
             {
@@ -2416,9 +2349,7 @@ namespace Kraken
                 label108.Text = "Telefonszám: " + belepo.Telefonja.ToString();
             }
             catch
-            {
-
-            }
+            { }
         }
 
         #endregion Adatok
@@ -2495,7 +2426,7 @@ namespace Kraken
         /// </summary>
         private void Hallgato_Targyfelvetel_Kijeloles()
         {
-            // Kijelölés esetén engedélyezzük a gombokat
+            // Kijelölés esetén engedélyezzük a gombokat.
             if (dataGridView1.CurrentCellAddress.X >= 0)
             {
                 if (belepo.Statusza.ToString() == "aktív")
@@ -2503,7 +2434,7 @@ namespace Kraken
                     button12.Enabled = true;
                     button13.Enabled = true;
 
-                    // Tárgyazonosító megszerzése
+                    // Tárgyazonosító megszerzése.
                     try
                     {
                         int kijeloltsorindex = dataGridView1.SelectedCells[0].RowIndex;
@@ -2514,9 +2445,7 @@ namespace Kraken
                         h_targyfelv_elokov = kijeloltsor.Cells["elokovetelmeny"].Value.ToString();
                     }
                     catch
-                    {
-
-                    }
+                    { }
                 }
             }
             else
@@ -2533,7 +2462,8 @@ namespace Kraken
         {
             dataGridView1.Rows.Clear();
 
-            if (comboBox1.Text.ToString() != "") // A félév kiválasztva
+			// A félév kiválasztva.
+            if (comboBox1.Text.ToString() != "")
             {
                 try
                 {
@@ -2545,37 +2475,38 @@ namespace Kraken
                     Targy[] eredmeny1 = server.Targy_Lista(megy1, felev);
                     Hallgato_index[] eredmeny2 = server.Hallgato_Index_Lista(megy2, felev, kod);
 
-                    if ((checkBox1.Checked == true) || (checkBox2.Checked == true)) // A felvett- vagy teljesített tárgyak kihagyása
+					// A felvett- vagy teljesített tárgyak kihagyása.
+                    if ((checkBox1.Checked == true) || (checkBox2.Checked == true))
                     {
-                        if ((textBox1.Text.ToString() != "") && (comboBox2.Text.ToString() != "")) // Részletesebb keresés
+						// Részletesebb keresés.
+                        if ((textBox1.Text.ToString() != "") && (comboBox2.Text.ToString() != ""))
                         {
-                            // A keresés és a kihagyások
+                            // A keresés és a kihagyások.
                             Osszetett_Kereses(eredmeny1, eredmeny2, felev);
                         }
                         else
                         {
-                            // Csak a kihagyások
+                            // Csak a kihagyások.
                             Csak_Kihagyasos_Kereses(eredmeny1, eredmeny2, felev);
                         }
                     }
                     else
                     {
-                        if ((textBox1.Text.ToString() != "") && (comboBox2.Text.ToString() != "")) // Részletesebb keresés
+						// Részletesebb keresés.
+                        if ((textBox1.Text.ToString() != "") && (comboBox2.Text.ToString() != ""))
                         {
-                            // Csak a keresés
+                            // Csak a keresés.
                             Csak_Kereses(eredmeny1, eredmeny2, felev);
                         }
                         else
                         {
-                            // Csak a tárgylista
+                            // Csak a tárgylista.
                             Csak_Listas_Kereses(eredmeny1, eredmeny2, felev);
                         }
                     }
                 }
                 catch
-                {
-
-                }
+                { }
             }
         }
 
@@ -2765,9 +2696,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -2816,9 +2745,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -2900,9 +2827,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -2995,9 +2920,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -3019,7 +2942,7 @@ namespace Kraken
                 Targy[] eredmeny1 = server.Targy_Lista(megy1, felev);
                 Hallgato_index[] eredmeny2 = server.Hallgato_Index_Lista(megy2, felev, kod);
 
-                // Teljesítette-e már korábban
+                // Teljesítette-e már korábban.
                 for (int i = 0; i < eredmeny2.Length; i++)
                 {
                     if ((eredmeny2[i].Torolve.ToString() == "false") && (eredmeny2[i].Kodja.ToString() == h_targyfelv_id.ToString()) && (int.Parse(eredmeny2[i].Jegye) > 1))
@@ -3028,7 +2951,7 @@ namespace Kraken
                     }
                 }
 
-                // Fel van-e véve az aktuális félévben
+                // Fel van-e véve az aktuális félévben.
                 for (int i = 0; i < eredmeny2.Length; i++)
                 {
                     if ((eredmeny2[i].Torolve.ToString() == "false") && (eredmeny2[i].Kodja.ToString() == h_targyfelv_id.ToString()) && (eredmeny2[i].Feleve.ToString() == aktualis_felev.ToString()))
@@ -3037,7 +2960,7 @@ namespace Kraken
                     }
                 }
 
-                // Teljesítve van-e az előkövetelménye
+                // Teljesítve van-e az előkövetelménye.
                 for (int i = 0; i < eredmeny2.Length; i++)
                 {
                     if ((eredmeny2[i].Torolve.ToString() == "false") && (eredmeny2[i].Kodja.ToString() == h_targyfelv_elokov.ToString()) && (int.Parse(eredmeny2[i].Jegye) > 1))
@@ -3046,7 +2969,7 @@ namespace Kraken
                     }
                 }
 
-                // Leadta-e már korábban a tárgyat
+                // Leadta-e már korábban a tárgyat.
                 for (int i = 0; i < eredmeny2.Length; i++)
                 {
                     if ((eredmeny2[i].Torolve.ToString() == "false") && (eredmeny2[i].Kodja.ToString() == h_targyfelv_id.ToString()))
@@ -3060,7 +2983,7 @@ namespace Kraken
                 {
                     if ((van1 == 0) && (van2 == 0) && (van3 == 1))
                     {
-                        // új
+                        // új.
                         Hallgato_index felvesz = new Hallgato_index(eredmeny1[0].Neve.ToString(), "false", eredmeny1[0].Kodja.ToString(), eredmeny1[0].Kreditje.ToString(), eredmeny1[0].Ideje.ToString(), eredmeny1[0].Oktatoja.ToString(), aktualis_felev.ToString(), eredmeny1[0].Kovetelmenye.ToString(), eredmeny1[0].Elokovetelmenye.ToString(), targy_kulcs.ToString(), belepo.Kodja.ToString(), "", "");
                         targy_kulcs++;
 
@@ -3086,7 +3009,7 @@ namespace Kraken
                 {
                     if (van4 == 1)
                     {
-                        // Visszaállítás
+                        // Visszaállítás.
                         Hallgato_index mit = new Hallgato_index(eredmeny2[id].Neve.ToString(), eredmeny2[id].Torolve.ToString(), eredmeny2[id].Kodja.ToString(), eredmeny2[id].Kreditje.ToString(), eredmeny2[id].Ideje.ToString(), eredmeny2[id].Oktatoja.ToString(), eredmeny2[id].Feleve.ToString(), eredmeny2[id].Kovetelmenye.ToString(), eredmeny2[id].Elokovetelmenye.ToString(), eredmeny2[id].Idje.ToString(), eredmeny2[id].Krakenje.ToString(), eredmeny2[id].Jegye.ToString(), eredmeny2[id].Alairasa.ToString());
                         Hallgato_index mire = new Hallgato_index(eredmeny2[id].Neve.ToString(), "false", eredmeny2[id].Kodja.ToString(), eredmeny2[id].Kreditje.ToString(), eredmeny2[id].Ideje.ToString(), eredmeny2[id].Oktatoja.ToString(), eredmeny2[id].Feleve.ToString(), eredmeny2[id].Kovetelmenye.ToString(), eredmeny2[id].Elokovetelmenye.ToString(), eredmeny2[id].Idje.ToString(), eredmeny2[id].Krakenje.ToString(), eredmeny2[id].Jegye.ToString(), eredmeny2[id].Alairasa.ToString());
 
@@ -3101,9 +3024,7 @@ namespace Kraken
                 Hallgato_Targyfelvetel_Betoltes();
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -3132,9 +3053,7 @@ namespace Kraken
                 Hallgato_Targyfelvetel_Betoltes();
             }
             catch
-            {
-
-            }
+            { }
         }
 
         #endregion Targyfelvetel
@@ -3192,8 +3111,7 @@ namespace Kraken
                     }
                 }
                 catch
-                {
-                }
+                { }
             }
         }
 
@@ -3438,10 +3356,10 @@ namespace Kraken
             dataGridView3.Rows.Clear();
             button9.Enabled = false;
 
-            // Új Üzenetek számának megjelenítése
+            // Új Üzenetek számának megjelenítése.
             Uzenetek_Bejovo_Olvasatlan_Betoltes();
 
-            // Bejövő üzenetek megjelenítése
+            // Bejövő üzenetek megjelenítése.
             try
             {
                 string megy = "uzenetek_bejovo_lista";
@@ -3459,9 +3377,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -3489,9 +3405,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -3527,18 +3441,14 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
         /// Loads messages.
         /// </summary>
         private void Hallgato_Uzenetek_Betoltes()
-        {
-
-        }
+        { }
 
         /// <summary>
         /// Loads the values for new messages.
@@ -3611,9 +3521,7 @@ namespace Kraken
                     }
                 }
                 catch
-                {
-
-                }
+                { }
             }
         }
 
@@ -3649,9 +3557,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         #endregion Targyak
@@ -3719,9 +3625,7 @@ namespace Kraken
                 label109.Text = "Telefonszám: " + belepo.Telefonja.ToString();
             }
             catch
-            {
-
-            }
+            { }
         }
 
         #endregion Adatok
@@ -3777,9 +3681,7 @@ namespace Kraken
                     }
                 }
                 catch
-                {
-
-                }
+                { }
             }
         }
 
@@ -4019,9 +3921,7 @@ namespace Kraken
         /// Loads messages.
         /// </summary>
         private void Oktato_Uzenetek_Betoltes()
-        {
-
-        }
+        { }
 
         /// <summary>
         /// Loads the incoming messages.
@@ -4032,10 +3932,10 @@ namespace Kraken
             button11.Enabled = false;
             richTextBox5.Text = "";
 
-            // Új Üzenetek számának megjelenítése
+            // Új Üzenetek számának megjelenítése.
             Uzenetek_Bejovo_Olvasatlan_Betoltes();
 
-            // Bejövő üzenetek megjelenítése
+            // Bejövő üzenetek megjelenítése.
             try
             {
                 string megy = "uzenetek_bejovo_lista";
@@ -4053,9 +3953,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -4084,9 +3982,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -4122,9 +4018,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -4296,9 +4190,7 @@ namespace Kraken
                 label110.Text = "Telefonszám: " + belepo.Telefonja.ToString();
             }
             catch
-            {
-
-            }
+            { }
         }
 
         #endregion Adatok
@@ -4529,9 +4421,7 @@ namespace Kraken
         /// Loads the admin user's messages.
         /// </summary>
         private void Admin_Uzenetek_Betoltes()
-        {
-
-        }
+        { }
 
         /// <summary>
         /// Loads the admin user's incoming messages.
@@ -4541,10 +4431,10 @@ namespace Kraken
             dataGridView12.Rows.Clear();
             button22.Enabled = false;
 
-            // Új Üzenetek számának megjelenítése
+            // Új Üzenetek számának megjelenítése.
             Uzenetek_Bejovo_Olvasatlan_Betoltes();
 
-            // Bejövő üzenetek megjelenítése
+            // Bejövő üzenetek megjelenítése.
             try
             {
                 string megy = "uzenetek_bejovo_lista";
@@ -4562,9 +4452,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -4592,9 +4480,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -4630,9 +4516,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -4890,7 +4774,7 @@ namespace Kraken
         {
             Admin_Targykezeles_Urites();
 
-            // Kijelölés esetén átadjuk az értékeket
+            // Kijelölés esetén átadjuk az értékeket.
             if (dataGridView8.CurrentCellAddress.X >= 0)
             {
                 try
@@ -4898,13 +4782,13 @@ namespace Kraken
                     button35.Enabled = true;
                     button44.Enabled = true;
 
-                    // A tárgy kódjának megszerzése
+                    // A tárgy kódjának megszerzése.
                     int kijeloltsorindex = dataGridView8.SelectedCells[0].RowIndex;
                     DataGridViewRow kijeloltsor = dataGridView8.Rows[kijeloltsorindex];
                     string a_targy_id = kijeloltsor.Cells["Column2"].Value.ToString();
                     box = a_targy_id;
 
-                    // A tárgy megkeresése
+                    // A tárgy megkeresése.
                     string megy = "admin_targykezeles_kijeloles";
                     Targy[] eredmeny = server.Targy_Lista(megy, a_targy_id);
                     textBox14.Text = eredmeny[0].Neve.ToString();
@@ -4917,9 +4801,7 @@ namespace Kraken
                     textBox82.Text = eredmeny[0].Kovetelmenye.ToString();
                 }
                 catch
-                {
-
-                }
+                { }
             }
         }
 
@@ -4957,9 +4839,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -5014,9 +4894,7 @@ namespace Kraken
                 Admin_Targykezeles_Betoltes();
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -5084,9 +4962,7 @@ namespace Kraken
                 Admin_Targykezeles_Betoltes();
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -5122,9 +4998,7 @@ namespace Kraken
                 Admin_Targykezeles_Betoltes();
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -5470,9 +5344,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -5482,7 +5354,7 @@ namespace Kraken
         {
             Admin_Hallgatokezeles_Urites();
 
-            // Kijelölés esetén átadjuk az értékeket
+            // Kijelölés esetén átadjuk az értékeket.
             if (dataGridView16.CurrentCellAddress.X >= 0)
             {
                 try
@@ -5490,17 +5362,17 @@ namespace Kraken
                     button38.Enabled = true;
                     button45.Enabled = true;
 
-                    // A hallgató kraken kódjának megszerzése
+                    // A hallgató kraken kódjának megszerzése.
                     int kijeloltsorindex = dataGridView16.SelectedCells[0].RowIndex;
                     DataGridViewRow kijeloltsor = dataGridView16.Rows[kijeloltsorindex];
                     string a_hallgato_id = kijeloltsor.Cells["Column11"].Value.ToString();
                     box = a_hallgato_id;
                     string megy = "admin_hallgatokezeles_kijeloles";
 
-                    // A hallgató megkeresése
+                    // A hallgató megkeresése.
                     Felhasznalo[] eredmeny = server.Felhasznalo_Lista(megy, a_hallgato_id);
 
-                    // A hallgató adatainak megjelenítése
+                    // A hallgató adatainak megjelenítése.
                     textBox19.Text = eredmeny[0].Neve.ToString();
                     textBox20.Text = eredmeny[0].Kodja.ToString();
                     textBox21.Text = eredmeny[0].Jelszava.ToString();
@@ -5519,9 +5391,7 @@ namespace Kraken
                     textBox66.Text = "hallgató";
                 }
                 catch
-                {
-
-                }
+                { }
             }
         }
 
@@ -5593,9 +5463,7 @@ namespace Kraken
                 Admin_Hallgatokezeles_Betoltes();
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -5699,9 +5567,7 @@ namespace Kraken
                 Admin_Hallgatokezeles_Betoltes();
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -5729,9 +5595,7 @@ namespace Kraken
                 Admin_Hallgatokezeles_Betoltes();
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -6176,9 +6040,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -6211,9 +6073,7 @@ namespace Kraken
                 Admin_Oktatokezeles_Betoltes();
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -6241,9 +6101,7 @@ namespace Kraken
                 Admin_Oktatokezeles_Betoltes();
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -6253,7 +6111,7 @@ namespace Kraken
         {
             Admin_Oktatokezeles_Urites();
 
-            // Kijelölés esetén átadjuk az értékeket
+            // Kijelölés esetén átadjuk az értékeket.
             if (dataGridView17.CurrentCellAddress.X >= 0)
             {
                 try
@@ -6262,13 +6120,13 @@ namespace Kraken
                     button39.Enabled = true;
                     string megy = "admin_oktatokezeles_kijeloles";
 
-                    // Oktató Kraken kódjának megszerzése
+                    // Oktató Kraken kódjának megszerzése.
                     int kijeloltsorindex = dataGridView17.SelectedCells[0].RowIndex;
                     DataGridViewRow kijeloltsor = dataGridView17.Rows[kijeloltsorindex];
                     string a_oktato_id = kijeloltsor.Cells["dataGridViewTextBoxColumn24"].Value.ToString();
                     box = a_oktato_id;
 
-                    // Az oktató adatainak betöltése
+                    // Az oktató adatainak betöltése.
                     Felhasznalo[] eredmeny = server.Felhasznalo_Lista(megy, a_oktato_id);
                     textBox42.Text = eredmeny[0].Neve.ToString();
                     textBox41.Text = eredmeny[0].Kodja.ToString();
@@ -6288,9 +6146,7 @@ namespace Kraken
                     textBox50.Text = "oktató";
                 }
                 catch
-                {
-
-                }
+                { }
             }
         }
 
@@ -6390,9 +6246,7 @@ namespace Kraken
                 Admin_Oktatokezeles_Betoltes();
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -6544,7 +6398,7 @@ namespace Kraken
             }
         }
 
-        // Admin_Oktatókezelés státusz változása
+        // Admin_Oktatókezelés státusz változása.
         private void Admin_Oktatokezeles_Statusz()
         {
             if (textBox85.Text != "")
@@ -6727,9 +6581,7 @@ namespace Kraken
                     }
                 }
                 catch
-                {
-
-                }
+                { }
             }
         }
 
@@ -6782,9 +6634,7 @@ namespace Kraken
                 }
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -6806,13 +6656,11 @@ namespace Kraken
                 server.Hallgato_Index_Torles(mit);
             }
             catch
-            {
-
-            }
+            { }
 
             try
             {
-                // Üzenet
+                // Üzenet.
                 DateTime idoo = DateTime.Now;
                 string formatum = "yyyy.MM.dd,HH:mm:ss";
                 string text = "A(z) " + listBox6.SelectedItem.ToString() + " tárgy leadásra került, módosító: " + belepo.Neve.ToString();
@@ -6824,9 +6672,7 @@ namespace Kraken
                 server.Uzenet_Hozzaad(mit2);
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>
@@ -6847,13 +6693,11 @@ namespace Kraken
                 server.Hallgato_Index_Hozzaad(mit);
             }
             catch
-            {
-
-            }
+            { }
 
             try
             {
-                // Üzenet
+                // Üzenet.
                 DateTime idoo = DateTime.Now;
                 string formatum = "yyyy.MM.dd,HH:mm:ss";
                 string text = "A(z) " + listBox7.SelectedItem.ToString() + " tárgy felvételre került, módosító: " + belepo.Neve.ToString();
@@ -6865,9 +6709,7 @@ namespace Kraken
                 server.Uzenet_Hozzaad(mit2);
             }
             catch
-            {
-
-            }
+            { }
         }
 
         /// <summary>

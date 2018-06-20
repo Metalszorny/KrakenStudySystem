@@ -228,6 +228,12 @@ namespace Kraken_server
             this.idje = idje;
             this.torolve = torolve;
         }
+		
+		/// <summary>
+        /// Destroys the instance of the <see cref="Uzenet"/> class.
+        /// </summary>
+        ~Uzenet()
+        { }
 
         #endregion Constructors
 
